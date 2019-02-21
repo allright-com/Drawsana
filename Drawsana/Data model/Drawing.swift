@@ -95,8 +95,6 @@ public class Drawing: Codable {
     multiDecoder.tryDecoding(PenShape.self)
     multiDecoder.tryDecoding(RectShape.self)
     multiDecoder.tryDecoding(TextShape.self)
-    multiDecoder.tryDecoding(StarShape.self)
-    multiDecoder.tryDecoding(NgonShape.self)
     shapeDecoder?(multiDecoder)
     container = multiDecoder.container
     return multiDecoder.results
@@ -129,7 +127,7 @@ public class Drawing: Codable {
   }
 
   public func getShape(at point: CGPoint, filter: ((Shape) -> Bool)? = nil) -> Shape? {
-    return shapes.filter({ $0.hitTest(point: point) && filter?($0) != false }).first
+    return shapes.filter({ $0.hitTest(point: point) && filter?($0) != false }).last
   }
 
   public func getShape<T: Shape>(of type: T.Type, at point: CGPoint, filter: ((Shape) -> Bool)? = nil) -> T? {
