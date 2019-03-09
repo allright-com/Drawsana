@@ -23,7 +23,7 @@ public class SimplifiedEraserTool: DrawingTool {
 	}
 	
 	public func handleDragStart(context: ToolOperationContext, point: CGPoint) {
-		removeShape(context: context, at: point)
+		// intentionally nothing
 	}
 	
 	public func handleDragContinue(context: ToolOperationContext, point: CGPoint, velocity: CGPoint) {
@@ -31,7 +31,7 @@ public class SimplifiedEraserTool: DrawingTool {
 	}
 	
 	public func handleDragEnd(context: ToolOperationContext, point: CGPoint) {
-		// intentionally nothing
+		removeShape(context: context, at: point)
 	}
 	
 	public func handleDragCancel(context: ToolOperationContext, point: CGPoint) {
