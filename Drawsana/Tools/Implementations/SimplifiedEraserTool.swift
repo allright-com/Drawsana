@@ -39,9 +39,20 @@ public class SimplifiedEraserTool: DrawingTool {
 	}
 	
 	// MARK: - Private logic
-	private func removeShape(context: ToolOperationContext, at point: CGPoint) {
-		if let shape = context.drawing.getShape(at: point) {
-			context.operationStack.apply(operation: RemoveShapeOperation(shape: shape))
-		}
-	}
+    private func removeShape(context: ToolOperationContext, at point: CGPoint) {
+        let plusPoint = CGPoint(x: point.x + 5.0, y: point.y + 5.0)
+        let minusPoint = CGPoint(x: point.x - 5.0, y: point.y - 5.0)
+        print(point)
+        if let shape = context.drawing.getShape(at: point) {
+            context.operationStack.apply(operation: RemoveShapeOperation(shape: shape))
+        }
+        
+        if let shape = context.drawing.getShape(at: plusPoint) {
+            context.operationStack.apply(operation: RemoveShapeOperation(shape: shape))
+        }
+        
+        if let shape = context.drawing.getShape(at: minusPoint) {
+            context.operationStack.apply(operation: RemoveShapeOperation(shape: shape))
+        }
+    }
 }
