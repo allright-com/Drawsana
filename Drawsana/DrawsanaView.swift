@@ -298,7 +298,8 @@ public class DrawsanaView: UIView {
       tool.handleDragCancel(context: toolOperationContext, point: point)
       reapplyLayerContents()
     default:
-      assert(false, "State not handled")
+        break
+//      assert(false, "State not handled")
     }
 
     applyToolSettingsChanges()
