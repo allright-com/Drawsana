@@ -35,6 +35,9 @@ public protocol TextToolDelegate: AnyObject {
 	/// Triggered on text update
 	func textToolWillUpdate(shape: TextShape)
 	func textToolDidUpdate(shape: TextShape)
+	
+	/// This method configure if user can edit entered text or not.
+	func isEditingAllowed() -> Bool
 }
 
 public class TextTool: NSObject, DrawingTool {
@@ -61,6 +64,11 @@ public class TextTool: NSObject, DrawingTool {
 	private weak var shapeUpdater: DrawsanaViewShapeUpdating?
 	// internal for use by DragHandler subclasses
 	internal lazy var editingView: TextShapeEditingView = makeTextView()
+	
+	private var isEditingAllowed: Bool {
+		guard let delegate = self.delegate else { return true }
+		return delegate.isEditingAllowed()
+	}
 	
 	public init(delegate: TextToolDelegate? = nil) {
 		super.init()
@@ -108,7 +116,8 @@ public class TextTool: NSObject, DrawingTool {
 	}
 	
 	private func handleTapWhenNoShapeIsActive(context: ToolOperationContext, point: CGPoint) {
-		if let tappedShape = context.drawing.getShape(of: TextShape.self, at: point) {
+		if let tappedShape = context.drawing.getShape(of: TextShape.self, at: point),
+		   self.isEditingAllowed {
 			beginEditing(shape: tappedShape, context: context)
 			context.toolSettings.isPersistentBufferDirty = true
 		} else {
